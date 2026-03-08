@@ -1,0 +1,578 @@
+/*
+  ============================================================
+  CSS UNITS — what do px, rem, and vh mean?
+
+  px (pixels)
+    A fixed size. 1px is one dot on the screen.
+    Use it when you want something to always be the exact
+    same size, no matter what. Good for borders and shadows.
+
+  rem (root em)
+    A size relative to the BASE font size of the page.
+    The base font size is usually 16px by default.
+    So 1rem = 16px, 0.5rem = 8px, 1.5rem = 24px.
+    Use it for font sizes and spacing so everything scales
+    nicely if the user changes their browser font size.
+  ============================================================
+*/
+
+
+/*
+  ============================================================
+  COLOR SYSTEM
+  Instead of writing colour codes like #4f46e5 everywhere,
+  we define them once here as "CSS variables" (also called
+  custom properties). To use one, write var(--variable-name).
+
+  This means if we ever want to change a colour, we only
+  change it in ONE place here and it updates everywhere.
+  ============================================================
+*/
+:root {
+    /* ── Brand ── */
+    --purple: #4f46e5;
+    /* Main brand colour — buttons, accents, progress */
+    --purple-dark: #4338ca;
+    /* Darker purple — used for button hover states */
+    --purple-light: #c7d2fe;
+    /* Light purple — used for the form input border */
+
+    /* ── Neutrals ── */
+    --off-black: #1a1a2e;
+    /* Near black — main text and selected colour border */
+    --grey: #6b7280;
+    /* Mid grey — secondary/subtle text */
+    --border: #e5e7eb;
+    /* Standard border colour used throughout */
+    --off-white: #f9fafb;
+    /* Very light grey — hover backgrounds */
+    --bg: #e8eaf6;
+    /* Page background colour */
+
+    /* ── Feedback ── */
+    --green: #22c55e;
+    /* Success green — completed habit circle */
+    --green-light: #f0fdf4;
+    /* Very light green — completed habit background */
+    --green-border: #bbf7d0;
+    /* Light green — completed habit border */
+    --red: #ef4444;
+    /* Danger red — delete button hover */
+}
+
+
+/* ── RESET & BASE STYLES ────────────────────────────────────
+   Browsers add their own default spacing, which can cause
+   unexpected gaps. This block removes those defaults so we
+   start with a blank canvas.
+─────────────────────────────────────────────────────────── */
+* {
+    /* Include padding and border inside an element's size */
+    box-sizing: border-box;
+    /* Remove all default outer spacing */
+    margin: 0;
+    /* Remove all default inner spacing */
+    padding: 0;
+}
+
+/* Style the whole page background and default text font */
+body {
+    /* The font stack: uses the system's default clean font */
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    /* Solid light background */
+    background: var(--bg);
+    /* Makes the background fill at least the full screen height */
+    min-height: 100vh;
+    /* vh = viewport height, so 100vh = full screen height */
+    /* Space around all content (top/bottom: 32px, sides: 24px) */
+    padding: 32px 24px;
+    /* Near-black text colour */
+    color: var(--off-black);
+}
+
+
+/* ── UTILITY CLASSES ────────────────────────────────────────
+   Small, reusable classes that can be added to any element.
+─────────────────────────────────────────────────────────── */
+
+/* Completely hides an element (used to show/hide the two views) */
+.hidden {
+    display: none;
+}
+
+/* Smaller, grey text used for secondary information */
+.subtitle {
+    font-size: 0.82rem;
+    color: var(--grey);
+}
+
+
+/* ── HEADER ─────────────────────────────────────────────────
+   The top bar with the logo and app title.
+─────────────────────────────────────────────────────────── */
+.header {
+    /* Flexbox lines children up in a row */
+    display: flex;
+    align-items: center;
+    /* Vertically centres logo and text */
+    gap: 12px;
+    /* Space between logo and title */
+    margin-bottom: 24px;
+    /* Space below the header */
+}
+
+.header h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    /* Bold */
+}
+
+/* The coloured square that holds the SVG icon */
+.logo {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    /* Rounded corners */
+    background: var(--purple);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Centre the icon inside the box */
+}
+
+/* Style the SVG heartbeat line inside the logo */
+.logo svg {
+    width: 26px;
+    height: 26px;
+    stroke: white;
+    /* Line colour */
+    fill: none;
+    /* Don't fill the shape with colour */
+    stroke-width: 2.5;
+    stroke-linecap: round;
+}
+
+
+/* ── TABS ───────────────────────────────────────────────────
+   The "Today" and "My Habits" buttons at the top.
+─────────────────────────────────────────────────────────── */
+.tabs {
+    display: flex;
+    /* Put the two buttons side by side */
+    gap: 4px;
+    margin-bottom: 24px;
+}
+
+/* Shared style for both tab buttons */
+.tab {
+    padding: 8px 22px;
+    border-radius: 8px;
+    border: 1.5px solid var(--border);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    /* Show a hand cursor on hover */
+    background: white;
+    color: var(--off-black);
+    /*
+    TRANSITION: adds a smooth fade between active/inactive styles
+    the smooth fade looks much more polished and is friendlier to the eye.
+  */
+    transition: all 0.2s;
+}
+
+/* The ACTIVE tab (currently selected) looks different */
+.tab.active {
+    background: var(--purple);
+    color: white;
+    border-color: var(--purple);
+}
+
+
+/* ── CARD ───────────────────────────────────────────────────
+   The white rounded box that wraps each view.
+─────────────────────────────────────────────────────────── */
+.card {
+    background: white;
+    border-radius: 18px;
+    padding: 24px;
+    /* Soft shadow so the card appears to float above the background */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+}
+
+
+/* ── TODAY VIEW ─────────────────────────────────────────────
+   Styles for the top part of the Today card.
+─────────────────────────────────────────────────────────── */
+
+/* Row with the date on the left and percentage on the right */
+.today-header {
+    display: flex;
+    justify-content: space-between;
+    /* Push children to opposite ends */
+    align-items: flex-start;
+    margin-bottom: 16px;
+}
+
+.today-header h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+/* The block containing the big percentage number */
+.pct-block {
+    text-align: right;
+}
+
+/* The big "60%" style number */
+.pct-num {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--purple);
+    display: block;
+    /* Forces "complete" text onto the next line */
+}
+
+/* The grey track behind the progress bar */
+.progress-bar {
+    width: 100%;
+    height: 6px;
+    background: var(--border);
+    border-radius: 99px;
+    /* Pill shape */
+    margin-bottom: 18px;
+}
+
+/* The coloured fill inside the progress bar.
+   JavaScript changes its width (e.g. width: 60%) */
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    /* Starts at 0, updated by JavaScript */
+    background: var(--purple);
+    border-radius: 99px;
+    /*
+    TRANSITION: smoothly animates the width changing over 0.4s.
+    When JavaScript updates the width (e.g. from 40% to 60%),
+    instead of jumping instantly, the bar slides across smoothly.
+    This makes it feel like a real progress bar, not just a
+    rectangle resizing.
+  */
+    transition: width 0.4s ease;
+}
+
+
+/* ── HABIT ITEMS (Today list) ───────────────────────────────
+   Each habit appears as a clickable row in the Today view.
+─────────────────────────────────────────────────────────── */
+.habit-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    /*
+    TRANSITION: smoothly animates the background colour change
+    over 0.15s. This applies when hovering AND when a habit is
+    marked done (switching to the green tint). Without it,
+    the colour would snap on and off instantly, which feels
+    abrupt for something the user is actively clicking.
+  */
+    transition: background 0.15s;
+}
+
+/* Slight grey tint when you hover over a habit */
+.habit-item:hover {
+    background: var(--off-white);
+}
+
+/* When a habit is marked as done, the background turns green-tinted */
+.habit-item.done {
+    background: var(--green-light);
+    border-color: var(--green-border);
+}
+
+/* Strike through and grey out the habit name when done */
+.habit-item.done .habit-name {
+    text-decoration: line-through;
+    color: var(--grey);
+}
+
+/* The circle checkbox on the left of each habit */
+.check-circle {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    /* Makes it a circle */
+    border: 2px solid var(--border);
+    flex-shrink: 0;
+    /* Prevents it from squishing */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /*
+    TRANSITION: smoothly animates ALL changes to this circle
+    over 0.2s. When a habit is ticked, the circle changes
+    colour, border, and background all at once. The transition
+    makes it feel like the circle is "filling in" rather than
+    instantly switching.
+  */
+    transition: all 0.2s;
+}
+
+/* When done, the circle turns solid green */
+.habit-item.done .check-circle {
+    background: var(--green);
+    border-color: var(--green);
+}
+
+/* The tick (checkmark) SVG inside the circle */
+.check-circle svg {
+    width: 12px;
+    height: 12px;
+    stroke: white;
+    fill: none;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    display: none;
+    /* Hidden by default — only shown when done */
+}
+
+/* Show the tick when the habit is marked done */
+.habit-item.done .check-circle svg {
+    display: block;
+}
+
+/* The small coloured dot next to each habit name */
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    /* The actual colour is set by JavaScript via an inline style */
+}
+
+/* The habit name text */
+.habit-name {
+    font-size: 0.95rem;
+    font-weight: 500;
+    flex: 1;
+    /* Takes up all remaining space in the row */
+}
+
+/* Message shown when there are no habits yet */
+.empty-state {
+    text-align: center;
+    padding: 32px 0;
+    color: var(--grey);
+    font-size: 0.9rem;
+}
+
+
+/* ── MY HABITS VIEW ─────────────────────────────────────────
+   Styles for the "Add a habit" form and the habits list.
+─────────────────────────────────────────────────────────── */
+
+/* The box that wraps the "add habit" form */
+.add-form {
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 24px;
+}
+
+/* Small label above each form field */
+.form-label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--off-black);
+    margin-bottom: 6px;
+    margin-top: 14px;
+    display: block;
+    /* Puts the label on its own line */
+}
+
+.form-label:first-child {
+    margin-top: 0;
+    /* No extra top space for the very first label */
+}
+
+/* The text box where the user types the habit name */
+.form-input {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1.5px solid var(--purple-light);
+    border-radius: 10px;
+    font-size: 0.9rem;
+    color: var(--off-black);
+    outline: none;
+    /* Removes default browser focus ring */
+    /*
+    TRANSITION: smoothly animates the border colour changing
+    over 0.2s. When the user clicks into the input box, the
+    border shifts from light purple to the full brand purple.
+    This gives a clear visual signal that the field is active
+    without it feeling like an abrupt flash.
+  */
+    transition: border-color 0.2s;
+}
+
+/* Highlight the border purple when the user clicks into the input */
+.form-input:focus {
+    border-color: var(--purple);
+}
+
+/* Style the placeholder text (the grey hint text) */
+.form-input::placeholder {
+    color: var(--grey);
+}
+
+/* The row of coloured circles for picking a habit colour */
+.colors-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    /* Wraps onto a new line if there's not enough space */
+}
+
+/* Each coloured circle in the colour picker */
+.color-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    /* Invisible border by default */
+    cursor: pointer;
+    /*
+    TRANSITION: smoothly animates the size (transform) and
+    border colour over 0.15s. When the user hovers, the circle
+    grows slightly. When selected, a dark border appears.
+    Without this, the circle would jump size instantly on hover,
+    which would feel twitchy. The smooth scale feels more natural.
+  */
+    transition: transform 0.15s, border-color 0.15s;
+}
+
+.color-btn:hover {
+    transform: scale(1.1);
+    /* Slightly grows on hover */
+}
+
+/* Dark border appears around the currently selected colour */
+.color-btn.selected {
+    border-color: var(--off-black);
+}
+
+/* The row containing the Add and Cancel buttons */
+.form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+/* The main purple "Add Habit" button */
+.btn-primary {
+    flex: 1;
+    /* Takes up all available width */
+    padding: 12px;
+    background: var(--purple);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    /*
+    TRANSITION: smoothly animates the background colour over
+    0.2s. When hovered, the button darkens slightly to signal
+    it's clickable. Without the transition it would be an
+    instant colour swap, which looks cheap. The fade makes
+    it feel like a polished, real button.
+  */
+    transition: background 0.2s;
+}
+
+.btn-primary:hover {
+    background: var(--purple-dark);
+}
+
+/* The secondary white "Cancel" button */
+.btn-secondary {
+    padding: 12px 20px;
+    background: white;
+    color: var(--off-black);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.btn-secondary:hover {
+    background: var(--off-white);
+}
+
+
+/* ── HABIT ROWS (My Habits list) ────────────────────────────
+   Each saved habit appears as a row with its name, stats,
+   and a delete button.
+─────────────────────────────────────────────────────────── */
+.habit-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    /* A light line between rows */
+    border-bottom: 1px solid var(--off-white);
+}
+
+/* Remove the bottom line from the very last row */
+.habit-row:last-child {
+    border-bottom: none;
+}
+
+/* The habit name inside each row */
+.habit-row-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+/* The streak and weekly % stats below the name */
+.habit-row-stats {
+    font-size: 0.78rem;
+    color: var(--grey);
+    margin-top: 2px;
+}
+
+/* The red trash/delete icon button */
+.btn-delete {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--grey);
+    padding: 4px;
+    /*
+    TRANSITION: smoothly animates the icon colour over 0.2s.
+    On hover the icon turns red to warn the user they're about
+    to delete something. The gradual colour shift gives them a
+    moment to notice the change before clicking, rather than
+    the icon just being red all the time.
+  */
+    transition: color 0.2s;
+    margin-left: auto;
+    /* Pushes the button all the way to the right */
+}
+
+.btn-delete:hover {
+    color: var(--red);
+}
+
+.btn-delete svg {
+    width: 18px;
+    height: 18px;
+    display: block;
+}
