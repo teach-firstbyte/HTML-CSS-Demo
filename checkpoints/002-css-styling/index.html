@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!--
+    ============================================================
+    HEAD SECTION
+    This section sets up the page but is NOT visible to the user.
+    Think of it as the "settings" for the page.
+    ============================================================
+  -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Health Habits</title>
+
+    <!-- Links our separate CSS file so the page gets styled nicely -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="header">
+      <img class="logo" src="images/ViTaL_Logo.svg" alt="ViTaL Logo">
+      <div>
+        <h1>Health Habits</h1>
+        <p class="subtitle">Track your daily wellness routine</p>
+      </div>
+
+    </div>
+
+    <!-- ── PART 2: TABS ─────────────────────────────────────────
+        Two buttons that switch between the "Today" view and the
+        "My Habits" view. onclick="switchTab(...)" calls a
+        JavaScript function in app.js when the button is clicked.
+    ─────────────────────────────────────────────────────────── -->
+    <div class="tabs">
+      <button class="tab active" id="tab-today">Today</button>
+      <button class="tab" id="tab-habits">My Habits</button>
+    </div>
+
+    <!-- ── PART 3A: TODAY VIEW ──────────────────────────────────
+        This card is visible when the "Today" tab is active.
+        It shows today's date, a progress bar, and a habit list.
+    ─────────────────────────────────────────────────────────── -->
+    <div class="card" id="view-today">
+      <div class="today-header">
+
+        <div>
+          <h2 id="today-date-label"></h2>
+          <p id="today-count" class="subtitle"></p>
+        </div>
+
+        <div class="pct-block">
+          <span class="pct-num" id="today-pct">0%</span>
+          <span class="subtitle">complete</span>
+        </div>
+
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+      <div id="today-list"></div>
+
+    </div>
+
+    <!-- ── PART 3B: MY HABITS VIEW ──────────────────────────────
+        This card is hidden at first (class="card hidden").
+        It appears when the user clicks the "My Habits" tab.
+        It contains a form to add new habits and a list of
+        existing habits below.
+    ─────────────────────────────────────────────────────────── -->
+    <div class="card hidden" id="view-habits">
+        <div class="add-form">
+        <label class="form-label">Habit Name</label>
+        <input
+          class="form-input"
+          id="habit-input"
+          type="text"
+          placeholder="e.g., Drink 8 glasses of water"
+        />
+        <label class="form-label">Color</label>
+        <div class="colors-row" id="colors-row"></div>
+        <div class="form-actions">
+          <button class="btn-primary" onclick="addHabit()">Add Habit</button>
+          <button class="btn-secondary" onclick="cancelAdd()">Cancel</button>
+        </div>
+
+      </div>
+      <h3>Your Habits</h3>
+      <div id="habits-list"></div>
+
+    </div>
+  </body>
+</html>
