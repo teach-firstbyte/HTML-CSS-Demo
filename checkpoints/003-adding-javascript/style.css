@@ -31,11 +31,8 @@
 :root {
   /* ── Brand ── */
   --purple: #4f46e5;
-  /* Main brand colour — buttons, accents, progress */
   --purple-dark: #4338ca;
-  /* Darker purple — used for button hover states */
   --purple-light: #c7d2fe;
-  /* Light purple — used for the form input border */
 
   /* ── Neutrals ── */
   --off-black: #1a1a2e;
@@ -237,7 +234,7 @@ body {
 .progress-bar {
   width: 100%;
   height: 6px;
-  background: var(--border);
+  background-color: var(--border);
   border-radius: 99px;
   /* Pill shape */
   margin-bottom: 18px;
@@ -249,7 +246,7 @@ body {
   height: 100%;
   width: 0%;
   /* Starts at 0, updated by JavaScript */
-  background: var(--purple);
+  background-color: var(--purple);
   border-radius: 99px;
   /*
   TRANSITION: smoothly animates the width changing over 0.4s.
