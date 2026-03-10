@@ -4,9 +4,110 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Health Habits</title>
-    
+
   </head>
   <body>
     <!-- PUT YOUR HTML HERE -->
+     <!-- ── PART 1: HEADER ───────────────────────────────────────
+        A logo icon on the left and the app title on the right.
+        The logo is drawn using SVG (a way to make shapes in HTML).
+    ─────────────────────────────────────────────────────────── -->
+    <div class="header">
+
+      <!-- BUILD OUT THE HEADER HERE -->
+
+    </div><!-- end .header -->
+
+
+    <!-- ── PART 2: TABS ─────────────────────────────────────────
+        Two buttons that switch between the "Today" view and the
+        "My Habits" view. onclick="switchTab(...)" calls a
+        JavaScript function in app.js when the button is clicked.
+    ─────────────────────────────────────────────────────────── -->
+    <div class="tabs">
+
+      <!-- "Today" tab starts with the "active" class so it looks selected on load -->
+      <button class="tab active" id="tab-today">Today</button>
+
+      <!-- "My Habits" tab — not active by default -->
+      <button class="tab" id="tab-habits">My Habits</button>
+
+    </div>
+
+
+    <!-- ── PART 3A: TODAY VIEW ──────────────────────────────────
+        This card is visible when the "Today" tab is active.
+        It shows today's date, a progress bar, and the habit list.
+    ─────────────────────────────────────────────────────────── -->
+    <div class="card" id="view-today">
+
+      <!-- Top row: date on the left, completion % on the right -->
+      <div class="today-header">
+
+        <div>
+          <!-- JavaScript will write today's date into this heading -->
+          <h2 id="today-date-label"></h2>
+          <!-- JavaScript will write "X of Y habits completed" here -->
+          <p id="today-count" class="subtitle"></p>
+        </div>
+
+        <div class="pct-block">
+          <!-- JavaScript will update this number (e.g. "60%") -->
+          <p class="pct-num" id="today-pct">0%</p>
+          <p class="subtitle">complete</p>
+        </div>
+
+      </div><!-- end .today-header -->
+
+      <!-- Progress bar: the inner div's width is set by JavaScript -->
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+
+      <!-- Empty container — JavaScript inserts each habit item here -->
+      <div id="today-list"></div>
+
+    </div><!-- end #view-today -->
+
+
+    <!-- ── PART 3B: MY HABITS VIEW ──────────────────────────────
+        This card is hidden at first (class="card hidden").
+        It appears when the user clicks the "My Habits" tab.
+        It contains a form to add new habits and a list of
+        existing habits below.
+    ─────────────────────────────────────────────────────────── -->
+    <div class="card" id="view-habits">
+
+      <!-- Form to add a new habit -->
+      <div class="add-form">
+
+        <!-- Text input: user types the habit name here -->
+        <label class="form-label">Habit Name</label>
+        <input
+          class="form-input"
+          id="habit-input"
+          type="text"
+          placeholder="e.g., Drink 8 glasses of water"
+        />
+
+        <!-- Colour picker: JavaScript fills this row with coloured circles -->
+        <label class="form-label">Color</label>
+        <div class="colors-row" id="colors-row"></div>
+
+        <!-- Action buttons -->
+        <div class="form-actions">
+          <!-- Calls addHabit() in app.js to save the new habit -->
+          <button class="btn-primary" onclick="addHabit()">Add Habit</button>
+          <!-- Calls cancelAdd() in app.js to clear the form -->
+          <button class="btn-secondary" onclick="cancelAdd()">Cancel</button>
+        </div>
+
+      </div><!-- end .add-form -->
+
+      <!-- Existing habits list -->
+      <!-- Add in the header and area where list will be! -->
+     
+
+    </div><!-- end #view-habits -->
   </body>
 </html>
